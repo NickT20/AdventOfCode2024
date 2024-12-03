@@ -3,7 +3,6 @@ package com.AdventOfCode2024;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.*;
 
 public class Day1 {
@@ -14,7 +13,7 @@ public class Day1 {
         try (BufferedReader br = new BufferedReader(new FileReader(System.getProperty("user.dir") + file))) {
             while (br.ready()) {
                 var line = br.readLine();
-                var inputs = line.split("   ");
+                var inputs = line.split("\\s+");
                 left.add(Integer.parseInt(inputs[0]));
                 right.add(Integer.parseInt(inputs[1]));
             }
@@ -37,7 +36,7 @@ public class Day1 {
         try (BufferedReader br = new BufferedReader(new FileReader(System.getProperty("user.dir") + file))) {
             while (br.ready()) {
                 var line = br.readLine();
-                var inputs = line.split("   ");
+                var inputs = line.split("\s+");
                 left.add(Integer.parseInt(inputs[0]));
                 right.add(Integer.parseInt(inputs[1]));
                 unique.put(Integer.parseInt(inputs[0]), 0);
