@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.regex.Pattern;
 
 public class Day3 {
+
     public int Part1(String file) throws IOException {
         var result = 0;
         try (BufferedReader br = new BufferedReader(new FileReader(System.getProperty("user.dir") + file))) {
