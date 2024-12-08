@@ -7,17 +7,17 @@ import java.math.BigInteger;
 import java.util.*;
 
 public class Day7 {
-    public BigInteger Part1(String file) throws IOException {
-        BigInteger result = BigInteger.ZERO;
+    public long Part1(String file) throws IOException {
+        long result = 0;
         try (BufferedReader br = new BufferedReader(new FileReader(System.getProperty("user.dir") + file))) {
             while (br.ready()) {
                 var line = br.readLine();
-                var part1 = line.split(":");
-                var part2 = part1[1].split("\\s+");
-                BigInteger total = new BigInteger(part1[0]);
-                int[] intParts = Arrays.stream(part2).filter(s -> !s.isEmpty()).mapToInt(Integer::parseInt).toArray();
-                if (backtrack(total, intParts,  BigInteger.ZERO, 0)) {
-                    result = result.add(total);
+                var part1 = line.split(": ");
+                var part2 = part1[1].split(" ");
+                long total = Long.parseLong(part1[0]);
+                long[] intParts = Arrays.stream(part2).mapToLong(Long::parseLong).toArray();
+                if (backtrack(total, intParts,  intParts[0], 1)) {
+                    result = result + total;
                 }
             }
         }
@@ -25,52 +25,52 @@ public class Day7 {
         return result;
     }
 
-    private boolean backtrack(BigInteger target, int[] set, BigInteger currentTotal, int index) {
-        if (index == set.length) {
-            return currentTotal.equals(target);
+    private boolean backtrack(long target, long[] set, long currentTotal, int index) {
+        if (index >= set.length) {
+            return currentTotal == target;
         }
 
         // addition
-        if (backtrack(target, set, currentTotal.add(BigInteger.valueOf(set[index])), index + 1)) {
+        if (backtrack(target, set, currentTotal + set[index], index + 1)) {
+            return true;
+        }
+
+        return backtrack(target, set, currentTotal * set[index], index + 1);
+    }
+
+    public long Part2(String file) throws IOException {
+        long result = 0;
+        try (BufferedReader br = new BufferedReader(new FileReader(System.getProperty("user.dir") + file))) {
+            while (br.ready()) {
+                var line = br.readLine();
+                var part1 = line.split(": ");
+                var part2 = part1[1].split(" ");
+                long total = Long.parseLong(part1[0]);
+                long[] intParts = Arrays.stream(part2).mapToLong(Long::parseLong).toArray();
+                if (backtrack2(total, intParts,  intParts[0], 1)) {
+                    result = result + total;
+                }
+            }
+        }
+
+        return result;
+    }
+
+    private boolean backtrack2(long target, long[] set, long currentTotal, int index) {
+        if (index >= set.length) {
+            return currentTotal == target;
+        }
+
+        // addition
+        if (backtrack2(target, set, currentTotal + set[index], index + 1)) {
             return true;
         }
 
         // multiplication
-        return backtrack(target, set, currentTotal.multiply(BigInteger.valueOf(set[index])), index + 1);
-    }
+        if (backtrack2(target, set, currentTotal * set[index], index + 1)) {
+            return true;
+        }
 
-
-//    public static boolean isValid(int[] numbers, int target) {
-//        if (numbers == null || numbers.length == 0) {
-//            return false;
-//        }
-//        return backtrack(numbers, target, numbers[0], 1);
-//    }
-//
-//    private static boolean backtrack(int[] numbers, int target, int currentTotal, int index) {
-//        // Base case: If we've used all numbers, check if we reached the target
-//        if (index == numbers.length) {
-//            return currentTotal == target;
-//        }
-//
-//        // Add the next number
-//        if (backtrack(numbers, target, currentTotal + numbers[index], index + 1)) {
-//            return true;
-//        }
-//
-//        // Multiply the next number
-//        if (backtrack(numbers, target, currentTotal * numbers[index], index + 1)) {
-//            return true;
-//        }
-//
-//        // If neither addition nor multiplication worked, return false
-//        return false;
-//    }
-
-    public int Part2(String file) throws IOException {
-        var result = 0;
-
-
-        return result;
+        return backtrack2(target, set, Long.parseLong(String.valueOf(currentTotal) + set[index]), index + 1);
     }
 }
