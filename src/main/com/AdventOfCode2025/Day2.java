@@ -30,37 +30,29 @@ public class Day2 {
 
         return result;
     }
-    public int Part2(String file) throws IOException {
-        var result = 0;
-        var location = 50;
+
+    private boolean isInvalid(String testString) {
+        var sb = new StringBuilder(testString);
+        var length = testString.length();
+        var doubled = sb.append(testString);
+        return doubled.indexOf(testString, 1) < length;
+
+    }
+    public long Part2(String file) throws IOException {
+        long result = 0;
         try (BufferedReader br = new BufferedReader(new FileReader(System.getProperty("user.dir") + file))) {
             while (br.ready()) {
                 var line = br.readLine();
-                int intNumber = Integer.parseInt(line.substring(1));
-                if (line.charAt(0) == 'L') {
-                    // If we start at zero and don't end on zero then take away one which will be made up later
-                    if (location == 0 && intNumber % 100 != 0) { result--; }
-
-                    location = location - intNumber;
-
-                    while(location < 0) {
-                        location = location + 100;
-                        result++;
-                    }
-
-                    if (location == 0) {
-                        result++;
-                    }
-                }
-                if (line.charAt(0) == 'R') {
-                    location = location + intNumber;
-                    while(location > 99) {
-                        location = location - 100;
-                        result++;
+                var parts = line.split("-");
+                var start = Long.parseLong(parts[0]);
+                var end = Long.parseLong(parts[1]);
+                for(var x = start; x <= end; x++) {
+                    var stringValue = String.valueOf(x);
+                    if (isInvalid(stringValue)) {
+                        result += x;
                     }
                 }
             }
-
         }
 
         return result;

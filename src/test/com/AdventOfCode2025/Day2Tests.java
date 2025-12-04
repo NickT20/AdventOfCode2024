@@ -20,13 +20,13 @@ class Day2Tests {
 
     @Test
     void Test2Example() throws IOException {
-        var day1 = new com.AdventOfCode2025.Day1();
-        assertEquals(6, day1.Part2("/src/test/TestFiles2025/Day1Example.txt"));
+        var day2 = new com.AdventOfCode2025.Day2();
+        assertEquals(4174379265L, day2.Part2("/src/test/TestFiles2025/Day2Example.txt"));
     }
 
     @Test
     void Test2() throws IOException {
-        var day1 = new Day1();
-        assertEquals(7199, day1.Part2("/src/test/TestFiles2025/Day1.txt"));
+        var day2 = new com.AdventOfCode2025.Day2();
+        assertEquals(55647141923L, day2.Part2("/src/test/TestFiles2025/Day2.txt"));
     }
 }
