@@ -5,17 +5,17 @@ import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
-class Day1Tests {
+class Day2Tests {
     @Test
     void Test1Example() throws IOException {
-        var day1 = new com.AdventOfCode2025.Day1();
-        assertEquals(3, day1.Part1("/src/test/TestFiles2025/Day1Example.txt"));
+        var day2 = new com.AdventOfCode2025.Day2();
+        assertEquals(1227775554, day2.Part1("/src/test/TestFiles2025/Day2Example.txt"));
     }
 
     @Test
     void Test1() throws IOException {
-        var day1 = new com.AdventOfCode2025.Day1();
-        assertEquals(1168, day1.Part1("/src/test/TestFiles2025/Day1.txt"));
+        var day2 = new com.AdventOfCode2025.Day2();
+        assertEquals(1227775554, day2.Part1("/src/test/TestFiles2025/Day2.txt"));
     }
 
     @Test
