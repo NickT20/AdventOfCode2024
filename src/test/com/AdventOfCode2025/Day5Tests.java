@@ -29,6 +29,10 @@ class Day5Tests {
     void Test2() throws IOException {
         var day5 = new Day5();
         // too high 391291976643862
+        // too high 388518907260115
+        // not right 337273250657995
+        // not right 337273250657987
+        // right -   336495597913098
         assertEquals(391291976643862L, day5.Part2("/src/test/TestFiles2025/Day5.txt"));
     }
 }
