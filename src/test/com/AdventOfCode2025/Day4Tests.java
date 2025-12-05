@@ -21,12 +21,12 @@ class Day4Tests {
     @Test
     void Test2Example() throws IOException {
         var day4 = new Day4();
-        assertEquals(3121910778619L, day4.Part2("/src/test/TestFiles2025/Day4Example.txt"));
+        assertEquals(43, day4.Part2("/src/test/TestFiles2025/Day4Example.txt"));
     }
 
     @Test
     void Test2() throws IOException {
         var day4 = new Day4();
-        assertEquals(172787336861064L, day4.Part2("/src/test/TestFiles2025/Day4.txt"));
+        assertEquals(8727, day4.Part2("/src/test/TestFiles2025/Day4.txt"));
     }
 }
