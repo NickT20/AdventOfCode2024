@@ -2,9 +2,8 @@ package com.AdventOfCode2025;
 
 import java.io.IOException;
 
-import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
 
 class Day5Tests {
     @Test
@@ -32,7 +31,9 @@ class Day5Tests {
         // too high 388518907260115
         // not right 337273250657995
         // not right 337273250657987
+        // not right 337253734761542
+        // not right 335677576867788
         // right -   336495597913098
-        assertEquals(391291976643862L, day5.Part2("/src/test/TestFiles2025/Day5.txt"));
+        assertEquals(336495597913098L, day5.Part2("/src/test/TestFiles2025/Day5.txt"));
     }
 }

@@ -5,11 +5,10 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import com.AdventOfCode2025.Models.Node;
+import org.springframework.util.comparator.ComparableComparator;
+
 import com.AdventOfCode2025.Models.Range;
 
 public class Day5 {
@@ -55,18 +54,24 @@ public class Day5 {
                     var min = Long.parseLong(parts[0]);
                     var max = Long.parseLong(parts[1]);
 
+                    var links = nodes.stream().filter(n -> n.getMax() == min || n.getMin() == max).toList();
+                    if (links.size() == 2) {
+                        nodes.removeAll(links);
+                        var min1 = links.stream().filter(l -> l.getMax() == min).findFirst();
+                        var max1 = links.stream().filter(l -> l.getMin() == max).findFirst();
+                        nodes.add(new Range(min1.get().getMin(), max1.get().getMax()));
+                    }
+
                     var equalMin = nodes.stream().filter(n -> n.getMin() == max).findFirst();
                     if (equalMin.isPresent()) {
                         equalMin.get().setMin(min);
-                        continue;
                     }
                     var equalMax = nodes.stream().filter(n -> n.getMax() == min).findFirst();
                     if (equalMax.isPresent()) {
                         equalMax.get().setMax(max);
-                        continue;
                     }
 
-                    var encompassedNodes = nodes.stream().filter(n -> n.getMin() > min && n.getMax() < max).toList();
+                    var encompassedNodes = nodes.stream().filter(n -> n.getMin() >= min && n.getMax() <= max).toList();
                     nodes.removeAll(encompassedNodes);
 
                     var existingMin = nodes.stream().filter(n -> n.getMin() <= min && n.getMax() >= min).findFirst();
@@ -74,19 +79,25 @@ public class Day5 {
                     if (existingMin.isPresent() && existingMax.isPresent()) {
                         nodes.remove(existingMin.get());
                         nodes.remove(existingMax.get());
+                        var newRange = new Range(existingMin.get().getMin(), existingMax.get().getMax());
+                        RemoveNodes(newRange, nodes);
                         nodes.add(new Range(existingMin.get().getMin(), existingMax.get().getMax()));
                     } else if (existingMin.isPresent() && max > existingMin.get().getMax()) {
                         existingMin.get().setMax(max);
+                        RemoveNodes(existingMin.get(), nodes);
                     } else if (existingMax.isPresent() && min < existingMax.get().getMin()) {
                         existingMax.get().setMin(min);
+                        RemoveNodes(existingMax.get(), nodes);
                     } else {
-                        nodes.add(new Range(Long.parseLong(parts[0]), Long.parseLong(parts[1])));
+                        var newRange2 = new Range(Long.parseLong(parts[0]), Long.parseLong(parts[1]));
+                        nodes.add(newRange2);
+                        RemoveNodes(newRange2, nodes);
                     }
                 }
             }
         }
 
-        var t = nodes.stream().sorted(Comparator.comparing(Range::getMin));
+
         for (var node: nodes) {
             result += node.getMax() - node.getMin();
             System.out.println(node.getMin() + "-" + node.getMax());
@@ -97,8 +108,15 @@ public class Day5 {
         return result;
     }
 
+    private void RemoveNodes(Range node, List<Range> nodes) {
+        var nodesToEliminate = nodes.stream().filter(n -> 
+        node.getMin() <= n.getMin() && 
+        node.getMax() >= n.getMax() &&
+        (n.getMax() != node.getMax() && n.getMin() != node.getMin())).toList();
+        nodes.removeAll(nodesToEliminate);
+    }
 
-    public long Part3(String file) throws IOException {
+public long Part3(String file) throws IOException {
         ArrayList<Long> starts = new ArrayList<>();
         ArrayList<Long> ends = new ArrayList<>();
         ArrayList<Long> ingredients = new ArrayList<>();
@@ -147,10 +165,10 @@ public class Day5 {
             }
         }
 
-        for (int i = 0; i < starts.size(); i++) {
-            part2 += ends.get(i)-starts.get(i)+1;
-            System.out.println(starts.get(i) + "-" + ends.get(i));
-        }
+        // for (int i = 0; i < starts.size(); i++) {
+        //     part2 += ends.get(i)-starts.get(i)+1;
+        //     System.out.println(starts.get(i) + "-" + ends.get(i));
+        // }
 
         for (int i = 0; i < starts.size(); i++) {
             part2 += ends.get(i)-starts.get(i)+1;
@@ -158,6 +176,4 @@ public class Day5 {
         System.out.println(part2);
         return part2;
     }
-
-
 }
