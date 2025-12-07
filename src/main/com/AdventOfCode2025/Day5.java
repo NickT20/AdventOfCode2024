@@ -4,10 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-
-import org.springframework.util.comparator.ComparableComparator;
 
 import com.AdventOfCode2025.Models.Range;
 
@@ -114,66 +111,5 @@ public class Day5 {
         node.getMax() >= n.getMax() &&
         (n.getMax() != node.getMax() && n.getMin() != node.getMin())).toList();
         nodes.removeAll(nodesToEliminate);
-    }
-
-public long Part3(String file) throws IOException {
-        ArrayList<Long> starts = new ArrayList<>();
-        ArrayList<Long> ends = new ArrayList<>();
-        ArrayList<Long> ingredients = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(System.getProperty("user.dir") + file))) {
-            while (br.ready()) {
-                String lineIn = br.readLine();
-                if (lineIn.indexOf("-") > -1) {
-                    starts.add(Long.parseLong(lineIn.substring(0, lineIn.indexOf("-"))));
-                    ends.add(Long.parseLong(lineIn.substring(lineIn.indexOf("-") + 1)));
-                } else if (lineIn.length() > 0) {
-                    ingredients.add(Long.parseLong(lineIn));
-                }
-            }
-        }
-        long part2 = 0;
-        for (int i = starts.size()-2; i >= 0; i--) {
-            for (int k = i+1; k < starts.size(); k++) {
-                if (starts.get(i) <= starts.get(k) && ends.get(i) >= ends.get(k)) {
-                    starts.remove(k);
-                    ends.remove(k);
-                    k--;
-                }
-                else if (starts.get(i) >= starts.get(k) && ends.get(i) <= ends.get(k)) {
-                    starts.add(i,starts.get(k));
-                    starts.remove(i+1);
-                    ends.add(i,ends.get(k));
-                    ends.remove(i+1);
-                    starts.remove(k);
-                    ends.remove(k);
-                    k--;
-                }
-                else if (starts.get(i) >= starts.get(k) && starts.get(i) <= ends.get(k) && ends.get(i) >= ends.get(k)) {
-                    starts.add(i,starts.get(k));
-                    starts.remove(i+1);
-                    starts.remove(k);
-                    ends.remove(k);
-                    k--;
-                }
-                else if (starts.get(i) <= starts.get(k) && starts.get(k) <= ends.get(i) && ends.get(i) <= ends.get(k)) {
-                    starts.remove(k);
-                    ends.add(i,ends.get(k));
-                    ends.remove(i+1);
-                    ends.remove(k);
-                    k--;
-                }
-            }
-        }
-
-        // for (int i = 0; i < starts.size(); i++) {
-        //     part2 += ends.get(i)-starts.get(i)+1;
-        //     System.out.println(starts.get(i) + "-" + ends.get(i));
-        // }
-
-        for (int i = 0; i < starts.size(); i++) {
-            part2 += ends.get(i)-starts.get(i)+1;
-        }
-        System.out.println(part2);
-        return part2;
     }
 }
