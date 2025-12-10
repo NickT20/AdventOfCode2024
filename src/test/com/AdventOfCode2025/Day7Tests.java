@@ -21,7 +21,7 @@ class Day7Tests {
     @Test
     void Test2Example() throws IOException {
         var day7 = new Day7();
-        assertEquals(3263827, day7.Part2("/src/test/TestFiles2025/Day7Example.txt"));
+        assertEquals(40, day7.Part2("/src/test/TestFiles2025/Day7Example.txt"));
     }
 
     @Test
