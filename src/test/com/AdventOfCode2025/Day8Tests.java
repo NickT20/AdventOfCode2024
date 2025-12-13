@@ -2,9 +2,8 @@ package com.AdventOfCode2025;
 
 import java.io.IOException;
 
-import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
 
 class Day8Tests {
     @Test
@@ -22,13 +21,13 @@ class Day8Tests {
     @Test
     void Test2Example() throws IOException {
         var Day8 = new Day8();
-        assertEquals(40, Day8.Part2("/src/test/TestFiles2025/Day8Example.txt"));
+        assertEquals(25272, Day8.Part2("/src/test/TestFiles2025/Day8Example.txt"));
     }
 
     @Test
     void Test2() throws IOException {
         var Day8 = new Day8();
         // 10092017166524 too low
-        assertEquals(10142723156431L, Day8.Part2("/src/test/TestFiles2025/Day8.txt"));
+        assertEquals(31182420, Day8.Part2("/src/test/TestFiles2025/Day8.txt"));
     }
 }

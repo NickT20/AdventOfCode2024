@@ -126,9 +126,10 @@ public class Day8 {
         var shortest = distances.stream().sorted(Comparator.comparing(d -> d.distance)).toList();
 
         var circuits = new ArrayList<Circuit>();
-        var iteration = 0;
-        do {
-            var connection = shortest.get(iteration);
+        JunctionBox prev1 = null;
+        JunctionBox prev2 = null;
+        for (var i = 0; i < shortest.size(); i++) {
+            var connection = shortest.get(i);
             if (circuits.isEmpty()) {
                 var newCircuit = new Circuit();
                 newCircuit.boxes.add(connection.boxA);
@@ -141,18 +142,26 @@ public class Day8 {
             if (found.size() == 1) {
                 found.get(0).boxes.add(connection.boxA);
                 found.get(0).boxes.add(connection.boxB);
+                if (circuits.get(0).boxes.size() == boxes.size()) {
+                    return connection.boxA.x * connection.boxB.x;
+                }
             } else if (found.size() == 2) {
                 var boxesToMove = found.get(0).boxes;
                 found.get(1).boxes.addAll(boxesToMove);
                 circuits.remove(found.get(0));
+                if (circuits.get(0).boxes.size() == boxes.size()) {
+                    return connection.boxA.x * connection.boxB.x;
+                }
             } else {
                 var newCircuit = new Circuit();
                 newCircuit.boxes.add(connection.boxA);
                 newCircuit.boxes.add(connection.boxB);
                 circuits.add(newCircuit);
+                if (circuits.get(0).boxes.size() == boxes.size()) {
+                    return connection.boxA.x * connection.boxB.x;
+                }
             }
-        } while(circuits.get(0).boxes.size() != boxes.size());
-
+        }
 
         return 0;
     }
